@@ -13,7 +13,14 @@ function Navbar() {
 
           <nav className="hidden md:flex gap-8 items-center">
             <a className="font-bold text-slate-700 hover:bg-green-300">Home </a>
-            <a className="font-bold text-slate-700  hover:bg-green-300">Details </a>
+            <a className="font-bold text-slate-700 position relative hover:bg-green-300">Details
+              <ul className="list-none position absolute transition 0.5s">
+                <li><a href=""> Donors</a></li>
+                <li><a href="">Hospital</a></li>
+                <li><a href="">Blood Bank</a></li>
+                <li><a href="">Patients</a></li>
+                </ul> 
+              </a>
             <a className="font-bold text-slate-700  hover:bg-green-300">About Campaign </a>
           </nav>
 
