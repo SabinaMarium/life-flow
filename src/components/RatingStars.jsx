@@ -6,7 +6,7 @@ const Star = ({ filled, onMouseEnter, onClick }) => (
   <svg
     onMouseEnter={onMouseEnter}
     onClick={onClick}
-    className="w-12 h-12 cursor-pointer"
+    className="w-8 sm:w-10 md:w-12 h-8 sm:h-10 md:h-12 cursor-pointer transition-transform"
     viewBox="0 0 24 24"
     fill={filled ? "#FACC15" : "none"}
     stroke="#FACC15"
@@ -48,10 +48,12 @@ function RatingStars() {
   };
 
   return (
-    <section className="bg-[#ECFDF5] py-16 flex flex-col items-center">
-      <h2 className="text-2xl font-bold mb-6">Rate This</h2>
+    <section className="bg-[#ECFDF5] py-16 flex flex-col items-center px-4 sm:px-6 lg:px-8">
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 text-center">
+        Rate This
+      </h2>
 
-      <div className="flex gap-4">
+      <div className="flex gap-3 sm:gap-4 md:gap-6 flex-wrap justify-center">
         {[...Array(5)].map((_, index) => (
           <div
             key={index}
@@ -67,7 +69,7 @@ function RatingStars() {
         ))}
       </div>
 
-      <p className="mt-4 text-lg">
+      <p className="mt-4 text-base sm:text-lg md:text-xl text-center">
         Your Rating: {rating} / 5
       </p>
     </section>

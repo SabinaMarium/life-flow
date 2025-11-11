@@ -11,15 +11,12 @@ const Campaign = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Timeline for image and text animation
       const tl = gsap.timeline({ defaults: { duration: 1, ease: "power3.out" } });
-
       tl.from(imageRef.current, { x: -100, opacity: 0 })
         .from(textRef.current, { x: 100, opacity: 0 }, "-=0.6");
 
-      // Continuous anticlockwise rotation for the badge
       gsap.to(badgeRef.current, {
-        rotation: 360, // negative for anticlockwise
+        rotation: 360,
         repeat: -1,
         duration: 8,
         ease: "linear",
@@ -30,34 +27,43 @@ const Campaign = () => {
   }, []);
 
   return (
-    <section id="campaign" ref={sectionRef} className="bg-[#ECFDF5] py-16 overflow-hidden mt-15">
-      <div className="max-w-7xl px-4 sm:px-6 lg:px-8 container mx-auto ">
-        <h2 className="text-4xl font-bold text-center mb-12">
+    <section
+      id="campaign"
+      ref={sectionRef}
+      className="bg-[#ECFDF5] py-16 overflow-hidden mt-15"
+    >
+      <div className="max-w-7xl px-4 sm:px-6 lg:px-8 container mx-auto">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12">
           About the Campaign🩸
         </h2>
 
-        <div className="flex flex-col md:flex-row gap-8 justify-between items-center">
+        <div className="flex flex-col md:flex-row gap-8 justify-center items-center">
           {/* Image Section with Badge Overlay */}
-          <div className="relative inline-block" ref={imageRef}>
-            {/* Main Campaign Image */}
+          <div
+            className="relative w-full md:w-1/2 flex justify-center"
+            ref={imageRef}
+          >
             <img
               src={campaign}
               alt="About the Campaign"
-              className="rounded-2xl w-full max-w-md shadow-soft"
+              className="rounded-2xl w-full max-w-sm sm:max-w-md md:max-w-lg shadow-lg object-cover"
             />
 
-            {/* Rotating Badge Image (Top-Left Corner) */}
+            {/* Rotating Badge Image */}
             <img
               ref={badgeRef}
               src={badge}
               alt="Badge"
-              className="absolute top-[-30px] left-[-30px] w-28 h-28" // increased size
+              className="absolute -top-6 -left-6 w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28"
             />
           </div>
 
           {/* Text Section */}
-          <div ref={textRef} className="text-slate-600 md:w-1/2">
-            <p className="mb-4">
+          <div
+            ref={textRef}
+            className="text-slate-600 w-full md:w-1/2 text-left md:text-left"
+          >
+            <p className="mb-4 text-base sm:text-lg">
               Our Blood Donation Campaign is a community-driven initiative aimed
               at saving lives through the simple yet powerful act of donating
               blood. Every drop counts — and your contribution can make the
@@ -70,7 +76,7 @@ const Campaign = () => {
               life.
             </p>
 
-            <ul className="list-none list-inside space-y-2">
+            <ul className="list-none list-inside space-y-2 text-sm sm:text-base">
               <li>
                 🤝 <b>Community Involvement:</b> Encourage volunteers, students,
                 and organizations to take part.
