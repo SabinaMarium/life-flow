@@ -8,7 +8,7 @@ import link from "../assets/icon-linkedin.png";
 function Footer() {
   return (
     <div>
-      <footer className="mt-10 bg-slate-900 text-slate-300">
+      <footer className=" bg-slate-900 text-slate-300">
         <div className="max-w-7xl container mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <div className="flex items-center gap-3 mb-2">

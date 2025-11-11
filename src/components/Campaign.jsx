@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import campaign from "../assets/campaign.png";
+import campaign from "../assets/campaign.jpg";
 import badge from "../assets/badge.png";
 
 const Campaign = () => {
@@ -30,9 +30,9 @@ const Campaign = () => {
   }, []);
 
   return (
-    <section id="campaign" ref={sectionRef} className="bg-[#ECFDF5] py-16 overflow-hidden">
-      <div className="max-w-7xl px-4 sm:px-6 lg:px-8 container mx-auto">
-        <h2 className="text-2xl font-bold text-center mb-12">
+    <section id="campaign" ref={sectionRef} className="bg-[#ECFDF5] py-16 overflow-hidden mt-15">
+      <div className="max-w-7xl px-4 sm:px-6 lg:px-8 container mx-auto ">
+        <h2 className="text-4xl font-bold text-center mb-12">
           About the Campaign🩸
         </h2>
 

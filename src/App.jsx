@@ -40,13 +40,13 @@ function App() {
 
      
       <Banner />
+      <Campaign />
       <Donors/>
       <Hospitals/>
       <BloodBanks/>
       <Patients/>
-      <Campaign />
-      <Impact />
       <RatingStars />
+      <Impact />
       <Footer />
     </div>
   );
