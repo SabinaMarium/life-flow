@@ -11,33 +11,31 @@ const Campaign = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Timeline for coordinated animation
+      // Timeline for image and text animation
       const tl = gsap.timeline({ defaults: { duration: 1, ease: "power3.out" } });
 
-      // Animate image and text as they enter
       tl.from(imageRef.current, { x: -100, opacity: 0 })
         .from(textRef.current, { x: 100, opacity: 0 }, "-=0.6");
 
-      // Continuous rotation for the badge
+      // Continuous anticlockwise rotation for the badge
       gsap.to(badgeRef.current, {
-        rotation: 360,
+        rotation: 360, // negative for anticlockwise
         repeat: -1,
         duration: 8,
         ease: "linear",
       });
     }, sectionRef);
 
-    return () => ctx.revert(); // cleanup on unmount
+    return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-[#ECFDF5] py-16 overflow-hidden">
+    <section id="campaign" ref={sectionRef} className="bg-[#ECFDF5] py-16 overflow-hidden">
       <div className="max-w-7xl px-4 sm:px-6 lg:px-8 container mx-auto">
         <h2 className="text-2xl font-bold text-center mb-12">
           About the Campaign🩸
         </h2>
 
-        {/* Flex Container for Image + Text */}
         <div className="flex flex-col md:flex-row gap-8 justify-between items-center">
           {/* Image Section with Badge Overlay */}
           <div className="relative inline-block" ref={imageRef}>
@@ -53,7 +51,7 @@ const Campaign = () => {
               ref={badgeRef}
               src={badge}
               alt="Badge"
-              className="absolute top-[-25px] left-[-25px] w-25 h-25"
+              className="absolute top-[-30px] left-[-30px] w-28 h-28" // increased size
             />
           </div>
 
