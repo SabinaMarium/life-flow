@@ -20,7 +20,7 @@ const Campaign = () => {
 
       // Continuous rotation for the badge
       gsap.to(badgeRef.current, {
-        rotation: -360,
+        rotation: 360,
         repeat: -1,
         duration: 8,
         ease: "linear",
