@@ -1,44 +1,103 @@
-import React from 'react';
+import React, { useEffect, useRef } from "react";
+import { gsap } from "gsap";
 import campaign from "../assets/campaign.png";
 import badge from "../assets/badge.png";
 
 const Campaign = () => {
+  const imageRef = useRef(null);
+  const textRef = useRef(null);
+  const badgeRef = useRef(null);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Timeline for coordinated animation
+      const tl = gsap.timeline({ defaults: { duration: 1, ease: "power3.out" } });
+
+      // Animate image and text as they enter
+      tl.from(imageRef.current, { x: -100, opacity: 0 })
+        .from(textRef.current, { x: 100, opacity: 0 }, "-=0.6");
+
+      // Continuous rotation for the badge
+      gsap.to(badgeRef.current, {
+        rotation: -360,
+        repeat: -1,
+        duration: 8,
+        ease: "linear",
+      });
+    }, sectionRef);
+
+    return () => ctx.revert(); // cleanup on unmount
+  }, []);
+
   return (
-    <div>
-  <section className="bg-[#ECFDF5] py-16">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 className="text-2xl font-bold text-center mb-12">
-        About the Campaign🩸
-      </h2>
+    <section ref={sectionRef} className="bg-[#ECFDF5] py-16 overflow-hidden">
+      <div className="max-w-7xl px-4 sm:px-6 lg:px-8 container mx-auto">
+        <h2 className="text-2xl font-bold text-center mb-12">
+          About the Campaign🩸
+        </h2>
 
-      {/* Flex Container for Image + Text */}
-      <div className="flex container mx-auto gap-8 justify-between items-center ">
-        {/* Image Section */}
-        <img
-          src={campaign}
-          alt="About the Campaign"
-          className="rounded-2xl w-full max-w-md shadow-soft h-110"
-        />
+        {/* Flex Container for Image + Text */}
+        <div className="flex flex-col md:flex-row gap-8 justify-between items-center">
+          {/* Image Section with Badge Overlay */}
+          <div className="relative inline-block" ref={imageRef}>
+            {/* Main Campaign Image */}
+            <img
+              src={campaign}
+              alt="About the Campaign"
+              className="rounded-2xl w-full max-w-md shadow-soft"
+            />
 
-        {/* Text Section */}
-        <div className="text-slate-600">
-          <p className="mb-4">
-            Our Blood Donation Campaign is a community-driven initiative aimed at saving lives through the simple yet powerful act of donating blood. Every drop counts — and your contribution can make the difference between life and death for patients in urgent need. We organize regular donation drives, awareness programs, and collaborations with hospitals to ensure a safe and steady blood supply. Through this campaign, we seek to inspire compassion, promote voluntary blood donation, and create a culture of care where everyone plays a role in giving others a second chance at life.
-          </p>
+            {/* Rotating Badge Image (Top-Left Corner) */}
+            <img
+              ref={badgeRef}
+              src={badge}
+              alt="Badge"
+              className="absolute top-[-25px] left-[-25px] w-25 h-25"
+            />
+          </div>
 
-          <ul className="list-none list-inside space-y-2">
-            <li>🤝 Community Involvement: Encourage volunteers, students, and organizations to take part.</li>
-            <li>❤️ Raise Awareness: Educate communities about the importance of regular blood donation.</li>
-            <li>🏥 Safe & Secure Process: All donations are collected following strict medical safety standards.</li>
-            <li>🌍 Promote Humanity: Spreading kindness, compassion, and unity through giving.</li>
-            <li>📣 Join the Movement: Become a donor, volunteer, or ambassador for the cause.</li>
-          </ul>
+          {/* Text Section */}
+          <div ref={textRef} className="text-slate-600 md:w-1/2">
+            <p className="mb-4">
+              Our Blood Donation Campaign is a community-driven initiative aimed
+              at saving lives through the simple yet powerful act of donating
+              blood. Every drop counts — and your contribution can make the
+              difference between life and death for patients in urgent need. We
+              organize regular donation drives, awareness programs, and
+              collaborations with hospitals to ensure a safe and steady blood
+              supply. Through this campaign, we seek to inspire compassion,
+              promote voluntary blood donation, and create a culture of care
+              where everyone plays a role in giving others a second chance at
+              life.
+            </p>
+
+            <ul className="list-none list-inside space-y-2">
+              <li>
+                🤝 <b>Community Involvement:</b> Encourage volunteers, students,
+                and organizations to take part.
+              </li>
+              <li>
+                ❤️ <b>Raise Awareness:</b> Educate communities about the
+                importance of regular blood donation.
+              </li>
+              <li>
+                🏥 <b>Safe & Secure Process:</b> All donations are collected
+                following strict medical safety standards.
+              </li>
+              <li>
+                🌍 <b>Promote Humanity:</b> Spreading kindness, compassion, and
+                unity through giving.
+              </li>
+              <li>
+                📣 <b>Join the Movement:</b> Become a donor, volunteer, or
+                ambassador for the cause.
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-</div>
-
+    </section>
   );
 };
 
