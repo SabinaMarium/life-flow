@@ -6,6 +6,10 @@ import Campaign from "./components/Campaign";
 import Impact from "./components/Impact";
 import RatingStars from "./components/RatingStars";
 import SignUp from "./components/SignUp"; 
+import Donors from "./components/Donors";
+import Hospitals from "./components/Hospitals";
+import BloodBanks from "./components/BloodBanks";
+import Patients from "./components/Patients";
 
 function App() {
   const [showSignUp, setShowSignUp] = useState(false);
@@ -36,6 +40,10 @@ function App() {
 
      
       <Banner />
+      <Donors/>
+      <Hospitals/>
+      <BloodBanks/>
+      <Patients/>
       <Campaign />
       <Impact />
       <RatingStars />
