@@ -1,5 +1,9 @@
 import React from "react";
 import logo from "../assets/logo.png";
+import fb from "../assets/icon-facebook.png";
+import twit from "../assets/icon-twitter.png";
+import utube from "../assets/icon-youtube.png";
+import link from "../assets/icon-linkedin.png";
 
 function Footer() {
   return (
@@ -29,8 +33,23 @@ function Footer() {
           </div>
           <div className="text-sm">
             <div className="font-semibold text-white mb-2">Follow</div>
-            <div className="text-slate-400">Instagram | Twitter | LinkedIn</div>
+            <div className="flex justify-between text-slate-400">
+  <span>Facebook</span>
+  <span>Twitter</span>
+  <span>LinkedIn</span>
+  <span>Youtube</span>
+</div>
+
+
+            <div className="flex justify-between mt-4 gap-2">
+            <img src={fb} alt="" />
+            <img src={twit} alt="" />
+            <img src={link} alt="" />
+            <img src={utube} alt="" />
           </div>
+          </div>
+          
+        
         </div>
         <div className="bg-slate-800 text-slate-500 text-xs py-3 text-center">
           © {new Date().getFullYear()} Life Flow All rights reserved.
