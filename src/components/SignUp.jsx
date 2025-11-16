@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-toastify";
+import Footer from "./Footer";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -91,6 +92,7 @@ function SignUp() {
         </form>
       </div>
     </div>
+    
   );
 }
 

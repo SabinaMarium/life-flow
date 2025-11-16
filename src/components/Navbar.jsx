@@ -16,8 +16,12 @@ function Navbar() {
             <span className="font-bold text-[24px] sm:text-[30px] text-indigo-600">Life Flow</span>
           </button>
 
-          <nav className="hidden md:flex gap-8 items-center">
-            <button onClick={() => navigate("/home")} className="font-bold px-2 py-1 rounded hover:bg-green-100">Home</button>
+          <nav  className=" hidden md:flex gap-8 items-center">
+           <a href="/home#banner"
+  className="font-bold text-slate-700 hover:bg-green-300 px-2 py-1 rounded cursor-pointer">
+
+  Home
+</a>
 
             <div className="relative">
               <button
@@ -35,8 +39,15 @@ function Navbar() {
                 </ul>
               )}
             </div>
+            <a
+  href="/home#campaign"
+  className="font-bold text-slate-700 hover:bg-green-300 px-2 py-1 rounded cursor-pointer"
+>
+  About Campaign
+</a>
 
-            <button onClick={() => navigate("/home")} className="font-bold px-2 py-1 rounded hover:bg-green-100">About Campaign</button>
+            
+            
           </nav>
 
           <div className="hidden md:flex items-center gap-4">

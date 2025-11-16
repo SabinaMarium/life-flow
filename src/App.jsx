@@ -45,11 +45,12 @@ function App() {
               <Patients />
               <RatingStars />
               <Impact />
-              <Footer />
+              
             </>
           }
         />
       </Routes>
+      <Footer />
     </>
   );
 }

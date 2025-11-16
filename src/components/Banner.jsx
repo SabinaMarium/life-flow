@@ -3,7 +3,7 @@ import banner from "../assets/banner.jpg";
 
 const Banner = () => {
     return (
-        <div className="mt-10">
+        <div className="mt-2">
             <img
                 src={banner}
                 alt="banner image"
