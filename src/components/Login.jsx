@@ -22,7 +22,7 @@ function Login() {
       toast.success(`Welcome back, ${user.username}!`);
       navigate("/database", { replace: true });
     } else {
-      toast.error("Life-Flow request to: Invalid username or password");
+      toast.error("Life-Flow says: Invalid username or password");
       navigate("/home", { replace: true });
     }
   };

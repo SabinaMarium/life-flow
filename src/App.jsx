@@ -16,23 +16,27 @@ import BloodBanks from "./components/BloodBanks";
 import Patients from "./components/Patients";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AdminLogin from "./components/AdminLogin";
+import AdminDashboard from "./components/AdminDashboard";
+
 
 function App() {
   return (
     <>
-      {/* Navbar always visible */}
+      
       <Navbar />
-
-      {/* Toasts available globally */}
       <ToastContainer position="top-center" autoClose={3000} />
 
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/user-details" element={<UserDetails />} />
         <Route path="/database" element={<Database />} />
+        
 
-        {/* Home page that shows main site UI */}
+       
         <Route
           path="/home"
           element={
