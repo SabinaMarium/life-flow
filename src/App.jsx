@@ -1,54 +1,56 @@
-import React, { useState } from "react";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Banner from "./components/Banner";
 import Footer from "./components/Footer";
+import Banner from "./components/Banner";
 import Campaign from "./components/Campaign";
 import Impact from "./components/Impact";
 import RatingStars from "./components/RatingStars";
-import SignUp from "./components/SignUp"; 
+import SignUp from "./components/SignUp";
+import Login from "./components/Login";
+import UserDetails from "./components/UserDetails";
+import Database from "./components/Database";
 import Donors from "./components/Donors";
 import Hospitals from "./components/Hospitals";
 import BloodBanks from "./components/BloodBanks";
 import Patients from "./components/Patients";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  const [showSignUp, setShowSignUp] = useState(false);
-
-  const handleSignUpClick = () => setShowSignUp(true);
-  const handleCloseSignUp = () => setShowSignUp(false);
-
   return (
-    <div>
-      {/* Navbar with sign up click handler */}
-      <Navbar onSignUpClick={handleSignUpClick} />
+    <>
+      {/* Navbar always visible */}
+      <Navbar />
 
-      {/* Sign Up Modal */}
-      {showSignUp && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="relative w-full max-w-md">
-            {/* Close button */}
-            <button
-              className="absolute top-2 right-2 text-white text-2xl font-bold"
-              onClick={handleCloseSignUp}
-            >
-              ×
-            </button>
-            <SignUp />
-          </div>
-        </div>
-      )}
+      {/* Toasts available globally */}
+      <ToastContainer position="top-center" autoClose={3000} />
 
-     
-      <Banner />
-      <Campaign />
-      <Donors/>
-      <Hospitals/>
-      <BloodBanks/>
-      <Patients/>
-      <RatingStars />
-      <Impact />
-      <Footer />
-    </div>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/user-details" element={<UserDetails />} />
+        <Route path="/database" element={<Database />} />
+
+        {/* Home page that shows main site UI */}
+        <Route
+          path="/home"
+          element={
+            <>
+              <Banner />
+              <Campaign />
+              <Donors />
+              <Hospitals />
+              <BloodBanks />
+              <Patients />
+              <RatingStars />
+              <Impact />
+              <Footer />
+            </>
+          }
+        />
+      </Routes>
+    </>
   );
 }
 
