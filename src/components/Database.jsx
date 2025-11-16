@@ -52,7 +52,7 @@ function ensureSampleHospitals() {
   return sample;
 }
 
-
+// -------------------- DATABASE COMPONENT --------------------
 
 function Database() {
   const navigate = useNavigate();
@@ -63,7 +63,23 @@ function Database() {
   const [hospitals, setHospitals] = useState([]);
 
   const authUser = localStorage.getItem("authUser");
-  const adminUsername = "admin123"; // You can change this
+  const adminUsername = "admin";
+
+  // ---- RANDOM SAMPLE DONORS GENERATED ----
+  const donorList = [
+    { name: "Rahim Uddin", phone: "01711-223344" },
+    { name: "Karim Hossain", phone: "01822-334455" },
+    { name: "Abdul Malik", phone: "01933-445566" },
+    { name: "Sakib Chowdhury", phone: "01644-556677" },
+    { name: "Farhan Ahmed", phone: "01555-667788" },
+    { name: "Nusrat Jahan", phone: "01766-778899" },
+    { name: "Rafiul Islam", phone: "01377-889900" },
+    { name: "Mehedi Hasan", phone: "01888-990011" },
+  ];
+
+  const randomDonor = () => {
+    return donorList[Math.floor(Math.random() * donorList.length)];
+  };
 
   useEffect(() => {
     if (!authUser) {
@@ -82,8 +98,6 @@ function Database() {
     navigate("/home");
   };
 
- 
-
   const clearAll = () => {
     if (!window.confirm("Are you sure? This will erase ALL data!")) return;
 
@@ -95,8 +109,6 @@ function Database() {
     window.location.reload();
   };
 
-  
-
   const patientByType = (type) => {
     return (
       users
@@ -106,9 +118,19 @@ function Database() {
     );
   };
 
+  const closestBloodBank = (hospitalName) => {
+    if (!hospitalName) return "-";
+    return bloodBanks.length > 0 ? bloodBanks[0].name : "-";
+  };
+
+  // --- NEW: RANDOM DONOR RECOMMENDATION ---
+  const recommendedDonors = () => {
+    const donor = randomDonor();
+    return `${donor.name} (${donor.phone})`;
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
-      
 
       <main className="flex-grow bg-gray-100 p-6">
         <div className="max-w-7xl mx-auto space-y-8">
@@ -129,7 +151,6 @@ function Database() {
                 Log out
               </button>
 
-              {/* Admin Only Button */}
               {authUser === adminUsername && (
                 <button
                   onClick={clearAll}
@@ -141,10 +162,9 @@ function Database() {
             </div>
           </div>
 
-          {/* Inventory Table */}
+          {/* Blood Inventory Table */}
           <div className="bg-white p-4 rounded shadow">
             <h2 className="text-xl font-semibold mb-3">Blood Inventory</h2>
-
             <table className="w-full text-left">
               <thead>
                 <tr>
@@ -165,10 +185,9 @@ function Database() {
             </table>
           </div>
 
-          {/* Patients Table */}
+          {/* Patient Requests Table */}
           <div className="bg-white p-4 rounded shadow">
             <h2 className="text-xl font-semibold mb-3">Patient Requests</h2>
-
             {users.length === 0 ? (
               <p>No patient requests found.</p>
             ) : (
@@ -180,6 +199,9 @@ function Database() {
                     <th className="border-b p-2">Blood Type</th>
                     <th className="border-b p-2">Hospital</th>
                     <th className="border-b p-2">Phone</th>
+                    <th className="border-b p-2">Suggested Blood Bank</th>
+                    <th className="border-b p-2">Recommended Donor</th>
+                    <th className="border-b p-2">Hospital Map</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -190,6 +212,25 @@ function Database() {
                       <td className="border-b p-2">{u.bloodType || "-"}</td>
                       <td className="border-b p-2">{u.hospital || "-"}</td>
                       <td className="border-b p-2">{u.phone || "-"}</td>
+                      <td className="border-b p-2">{closestBloodBank(u.hospital)}</td>
+
+                      {/* NEW RANDOM DONOR INFO */}
+                      <td className="border-b p-2">{recommendedDonors()}</td>
+
+                      <td className="border-b p-2">
+                        {u.hospital ? (
+                          <iframe
+                            title={`map-${i}`}
+                            src={`https://www.google.com/maps?q=${encodeURIComponent(
+                              u.hospital
+                            )}&output=embed`}
+                            className="w-full h-32 border rounded"
+                            loading="lazy"
+                          />
+                        ) : (
+                          "-"
+                        )}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -197,13 +238,12 @@ function Database() {
             )}
           </div>
 
-          {/* Blood Banks + Hospitals Grid */}
+          {/* Blood Banks & Hospitals Section */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
             {/* Blood Banks */}
             <div className="bg-white p-4 rounded shadow">
               <h2 className="text-xl font-semibold mb-3">Blood Banks (Live Map)</h2>
-
               <div className="space-y-4">
                 {bloodBanks.map((b, i) => (
                   <div key={i} className="border rounded">
@@ -216,6 +256,7 @@ function Database() {
                       src={`https://www.google.com/maps?q=${encodeURIComponent(
                         b.address
                       )}&output=embed`}
+                      loading="lazy"
                     />
                   </div>
                 ))}
@@ -225,7 +266,6 @@ function Database() {
             {/* Hospitals */}
             <div className="bg-white p-4 rounded shadow">
               <h2 className="text-xl font-semibold mb-3">Hospitals (Live Map)</h2>
-
               <div className="space-y-4">
                 {hospitals.map((h, i) => (
                   <div key={i} className="border rounded">
@@ -238,6 +278,7 @@ function Database() {
                       src={`https://www.google.com/maps?q=${encodeURIComponent(
                         h.address
                       )}&output=embed`}
+                      loading="lazy"
                     />
                   </div>
                 ))}
@@ -248,7 +289,6 @@ function Database() {
         </div>
       </main>
 
-      
     </div>
   );
 }
