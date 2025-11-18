@@ -3,8 +3,6 @@ import Footer from "./Footer";
 import Navbar from "./Navbar";
 import { useNavigate } from "react-router-dom";
 
-// -------------------- SAMPLE DATA SETUPS --------------------
-
 function ensureInitialInventory() {
   const inv = localStorage.getItem("bloodInventory");
   if (inv) return JSON.parse(inv);
@@ -52,8 +50,6 @@ function ensureSampleHospitals() {
   return sample;
 }
 
-// -------------------- DATABASE COMPONENT --------------------
-
 function Database() {
   const navigate = useNavigate();
 
@@ -65,7 +61,7 @@ function Database() {
   const authUser = localStorage.getItem("authUser");
   const adminUsername = "admin";
 
-  // ---- RANDOM SAMPLE DONORS GENERATED ----
+  // RANDOM DONOR LIST
   const donorList = [
     { name: "Rahim Uddin", phone: "01711-223344" },
     { name: "Karim Hossain", phone: "01822-334455" },
@@ -77,9 +73,8 @@ function Database() {
     { name: "Mehedi Hasan", phone: "01888-990011" },
   ];
 
-  const randomDonor = () => {
-    return donorList[Math.floor(Math.random() * donorList.length)];
-  };
+  const randomDonor = () =>
+    donorList[Math.floor(Math.random() * donorList.length)];
 
   useEffect(() => {
     if (!authUser) {
@@ -109,24 +104,30 @@ function Database() {
     window.location.reload();
   };
 
-  const patientByType = (type) => {
-    return (
-      users
-        .filter((u) => u.bloodType === type && u.patientName)
-        .map((u) => u.patientName)
-        .join(", ") || "-"
-    );
-  };
+  const patientByType = (type) =>
+    users
+      .filter((u) => u.bloodType === type && u.patientName)
+      .map((u) => u.patientName)
+      .join(", ") || "-";
 
-  const closestBloodBank = (hospitalName) => {
-    if (!hospitalName) return "-";
-    return bloodBanks.length > 0 ? bloodBanks[0].name : "-";
-  };
+  const closestBloodBank = (hospitalName) =>
+    bloodBanks.length > 0 ? bloodBanks[0].name : "-";
 
-  // --- NEW: RANDOM DONOR RECOMMENDATION ---
   const recommendedDonors = () => {
     const donor = randomDonor();
     return `${donor.name} (${donor.phone})`;
+  };
+
+  // ---------------------------
+  // ⭐ NEW FEATURE: "GOT BLOOD"
+  // ---------------------------
+  const markGotBlood = (bloodType) => {
+    const updatedUsers = users.map((u) =>
+      u.bloodType === bloodType ? { ...u, gotBlood: true } : u
+    );
+
+    setUsers(updatedUsers);
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
   };
 
   return (
@@ -135,7 +136,6 @@ function Database() {
       <main className="flex-grow bg-gray-100 p-6">
         <div className="max-w-7xl mx-auto space-y-8">
 
-          {/* Header */}
           <div className="flex justify-between items-center">
             <h1 className="text-3xl font-bold">Blood Donation Database</h1>
 
@@ -162,7 +162,9 @@ function Database() {
             </div>
           </div>
 
-          {/* Blood Inventory Table */}
+          {/* ------------------------------- */}
+          {/* BLOOD INVENTORY TABLE (RESTORED) */}
+          {/* ------------------------------- */}
           <div className="bg-white p-4 rounded shadow">
             <h2 className="text-xl font-semibold mb-3">Blood Inventory</h2>
             <table className="w-full text-left">
@@ -171,21 +173,33 @@ function Database() {
                   <th className="border-b p-2">Blood Type</th>
                   <th className="border-b p-2">Units Available</th>
                   <th className="border-b p-2">Requested By</th>
+                  <th className="border-b p-2">Got Blood</th>
                 </tr>
               </thead>
+
               <tbody>
                 {inventory.map((row) => (
                   <tr key={row.bloodType}>
                     <td className="border-b p-2">{row.bloodType}</td>
                     <td className="border-b p-2">{row.amount}</td>
                     <td className="border-b p-2">{patientByType(row.bloodType)}</td>
+
+                    {/* NEW COLUMN */}
+                    <td className="border-b p-2">
+                      <input
+                        type="checkbox"
+                        onChange={() => markGotBlood(row.bloodType)}
+                      />
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          {/* Patient Requests Table */}
+          {/* ------------------------------- */}
+          {/* PATIENT REQUESTS TABLE (RESTORED) */}
+          {/* ------------------------------- */}
           <div className="bg-white p-4 rounded shadow">
             <h2 className="text-xl font-semibold mb-3">Patient Requests</h2>
             {users.length === 0 ? (
@@ -204,6 +218,7 @@ function Database() {
                     <th className="border-b p-2">Hospital Map</th>
                   </tr>
                 </thead>
+
                 <tbody>
                   {users.map((u, i) => (
                     <tr key={i}>
@@ -214,7 +229,6 @@ function Database() {
                       <td className="border-b p-2">{u.phone || "-"}</td>
                       <td className="border-b p-2">{closestBloodBank(u.hospital)}</td>
 
-                      {/* NEW RANDOM DONOR INFO */}
                       <td className="border-b p-2">{recommendedDonors()}</td>
 
                       <td className="border-b p-2">
@@ -238,51 +252,53 @@ function Database() {
             )}
           </div>
 
-          {/* Blood Banks & Hospitals Section */}
+          {/* ------------------------------- */}
+          {/* BLOOD BANKS + HOSPITALS (RESTORED) */}
+          {/* ------------------------------- */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-            {/* Blood Banks */}
             <div className="bg-white p-4 rounded shadow">
-              <h2 className="text-xl font-semibold mb-3">Blood Banks (Live Map)</h2>
-              <div className="space-y-4">
-                {bloodBanks.map((b, i) => (
-                  <div key={i} className="border rounded">
-                    <div className="p-2">
-                      <strong>{b.name}</strong>
-                      <p className="text-sm text-gray-600">{b.address}</p>
-                    </div>
-                    <iframe
-                      className="w-full h-48"
-                      src={`https://www.google.com/maps?q=${encodeURIComponent(
-                        b.address
-                      )}&output=embed`}
-                      loading="lazy"
-                    />
+              <h2 className="text-xl font-semibold mb-3">
+                Blood Banks (Live Map)
+              </h2>
+
+              {bloodBanks.map((b, i) => (
+                <div key={i} className="border rounded mb-4">
+                  <div className="p-2">
+                    <strong>{b.name}</strong>
+                    <p className="text-sm text-gray-600">{b.address}</p>
                   </div>
-                ))}
-              </div>
+                  <iframe
+                    className="w-full h-48"
+                    src={`https://www.google.com/maps?q=${encodeURIComponent(
+                      b.address
+                    )}&output=embed`}
+                    loading="lazy"
+                  />
+                </div>
+              ))}
             </div>
 
-            {/* Hospitals */}
             <div className="bg-white p-4 rounded shadow">
-              <h2 className="text-xl font-semibold mb-3">Hospitals (Live Map)</h2>
-              <div className="space-y-4">
-                {hospitals.map((h, i) => (
-                  <div key={i} className="border rounded">
-                    <div className="p-2">
-                      <strong>{h.name}</strong>
-                      <p className="text-sm text-gray-600">{h.address}</p>
-                    </div>
-                    <iframe
-                      className="w-full h-48"
-                      src={`https://www.google.com/maps?q=${encodeURIComponent(
-                        h.address
-                      )}&output=embed`}
-                      loading="lazy"
-                    />
+              <h2 className="text-xl font-semibold mb-3">
+                Hospitals (Live Map)
+              </h2>
+
+              {hospitals.map((h, i) => (
+                <div key={i} className="border rounded mb-4">
+                  <div className="p-2">
+                    <strong>{h.name}</strong>
+                    <p className="text-sm text-gray-600">{h.address}</p>
                   </div>
-                ))}
-              </div>
+                  <iframe
+                    className="w-full h-48"
+                    src={`https://www.google.com/maps?q=${encodeURIComponent(
+                      h.address
+                    )}&output=embed`}
+                    loading="lazy"
+                  />
+                </div>
+              ))}
             </div>
 
           </div>

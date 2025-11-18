@@ -112,4 +112,4 @@ function UserDetails() {
   );
 }
 
-export default UserDetails;
+export default UserDetails;                                   
