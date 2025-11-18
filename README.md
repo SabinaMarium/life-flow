@@ -1,1 +1,1 @@
-[Live Link](https://capable-muffin-794dac.netlify.app/home)
+[Live Link](https://singular-cendol-b5cfd3.netlify.app/home)
